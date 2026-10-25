@@ -91,16 +91,16 @@ gemini:
   max_output_tokens: 4096
   thinking: true
 
-# Context / memory management
-context:
-  max_recent_decisions: 15
-  compression_interval_hours: 24
-  sensor_trend_hours: 24
+# Context / memory management || Since we are timed, we do not need AI command
+# context:
+#   max_recent_decisions: 15
+#   compression_interval_hours: 24
+#   sensor_trend_hours: 24
 
-# Scheduler
-scheduler:
-  min_checkin_minutes: 5
-  max_checkin_minutes: 480
+# Scheduler || Since we are timed, we do not need AI command
+# scheduler:
+#   min_checkin_minutes: 5
+#   max_checkin_minutes: 480
 
 # Startup. The pump/light/camera hardware test only runs on a cold start
 # (boot or `systemctl restart`), never on restarts from the website,
@@ -129,3 +129,10 @@ firebase:
 alerts:
   critical_temp_c: [5, 40]
   critical_moisture_pct: [10, 95]
+
+# New System -- Replaces AI and hardwires the time to water
+timed_watering:
+  interval_minutes: 360      # water every 6 hours
+  pump_seconds: 0.5            # 0.5s × 168 ml/s ≈ 84ml per watering
+  first_run_delay_minutes: 1 # first watering this long after startup
+  photo_after_watering: true # still take and upload photos
